@@ -1,0 +1,18 @@
+Metadata-Version: 2.4
+Name: slack-pulse
+Version: 0.1.0
+Requires-Python: >=3.12
+License-File: LICENSE
+Requires-Dist: slack-sdk==3.43.0
+Requires-Dist: slack-bolt==1.29.0
+Requires-Dist: slack-cli-hooks==0.3.0
+Requires-Dist: claude-agent-sdk==0.2.114
+Requires-Dist: aiohttp==3.14.1
+Requires-Dist: python-dotenv==1.2.2
+Provides-Extra: test
+Requires-Dist: pytest==9.1.1; extra == "test"
+Requires-Dist: pytest-asyncio==1.4.0; extra == "test"
+Provides-Extra: dev
+Requires-Dist: bolt-python-support-agent-claude[test]; extra == "dev"
+Requires-Dist: ruff==0.15.20; extra == "dev"
+Dynamic: license-file
