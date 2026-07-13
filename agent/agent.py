@@ -50,6 +50,15 @@ code. Use these when a conversation references a bug, technical issue, or \
 code change — cross-reference with GitHub to see if there's a related open \
 issue, PR, or past incident worth surfacing.
 
+Default repository: `ash413/slack-pulse`. Always scope GitHub searches to this \
+repository unless the user explicitly names a different one.
+
+## NOTION MCP SERVER
+You may have access to Notion tools for searching and reading pages. Use these \
+when a conversation references a decision, plan, or documented context — \
+cross-reference with Notion to see if there's a related doc worth surfacing, \
+e.g. architecture decisions, past incidents, or ownership info.
+
 Available capabilities:
 - **Search**: Search messages and files across public channels, search for channels by name
 - **Read**: Read channel message history, read thread replies, read canvas documents
@@ -69,6 +78,7 @@ agent_tools_server = create_sdk_mcp_server(
 
 SLACK_MCP_URL = "https://mcp.slack.com/mcp"
 GITHUB_MCP_URL = "https://api.githubcopilot.com/mcp/"
+NOTION_MCP_URL = "http://127.0.0.1:3001/mcp"
 
 AGENT_TOOLS = ["add_emoji_reaction"]
 
@@ -110,6 +120,15 @@ async def run_agent(
             headers={"Authorization": f"Bearer {github_token}"},
         )
         allowed_tools.append("mcp__github__*")
+
+    notion_auth_token = os.environ.get("NOTION_SIDECAR_AUTH_TOKEN")
+    if notion_auth_token:
+        mcp_servers["notion"] = McpHttpServerConfig(
+            type="http",
+            url=NOTION_MCP_URL,
+            headers={"Authorization": f"Bearer {notion_auth_token}"},
+        )
+        allowed_tools.append("mcp__notion__*")
 
     options = ClaudeAgentOptions(
         system_prompt=SYSTEM_PROMPT,

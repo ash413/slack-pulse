@@ -146,6 +146,11 @@ async def handle_passive_message(
                     f"{emoji} *Slack Pulse noticed something*\n"
                     f"{flag['summary']}\n"
                     f"> {flag['evidence']}"
+                    + (
+                        f"\n🔗 {flag['cross_reference']}"
+                        if flag.get("cross_reference")
+                        else ""
+                    )
                 ),
             )
     except Exception as e:
